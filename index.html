@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense & Budget Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <span class="theme-icon">☀️</span>
+  </button>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">Spendly</span>
+      </div>
+      <p class="tagline">Track. Visualize. Thrive.</p>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Balance Card -->
+    <section class="balance-section">
+      <div class="balance-card">
+        <div class="balance-label">Total Spent</div>
+        <div class="balance-amount" id="totalBalance">Rp 0</div>
+        <div class="balance-sub" id="balanceSub">No transactions yet</div>
+        <!-- Spending Limit -->
+        <div class="limit-row">
+          <label for="spendingLimit" class="limit-label">Monthly Limit (Rp)</label>
+          <div class="limit-input-wrap">
+            <input type="number" id="spendingLimit" class="limit-input" placeholder="e.g. 1000000" min="0" />
+            <button class="btn-set-limit" id="setLimitBtn">Set</button>
+          </div>
+          <div class="limit-bar-wrap" id="limitBarWrap" style="display:none">
+            <div class="limit-bar">
+              <div class="limit-bar-fill" id="limitBarFill"></div>
+            </div>
+            <span class="limit-pct" id="limitPct">0%</span>
+          </div>
+          <div class="limit-warning" id="limitWarning" style="display:none">
+            ⚠️ You've exceeded your spending limit!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-col layout for form + chart -->
+    <div class="grid-two">
+
+      <!-- Input Form -->
+      <section class="card form-card">
+        <h2 class="card-title">Add Transaction</h2>
+        <div class="form-group">
+          <label for="itemName">Item Name</label>
+          <input type="text" id="itemName" placeholder="e.g. Nasi Goreng" maxlength="50" />
+          <span class="error-msg" id="nameError">Please enter an item name.</span>
+        </div>
+        <div class="form-group">
+          <label for="itemAmount">Amount (Rp)</label>
+          <input type="number" id="itemAmount" placeholder="e.g. 25000" min="1" />
+          <span class="error-msg" id="amountError">Please enter a valid amount.</span>
+        </div>
+        <div class="form-group">
+          <label for="itemCategory">Category</label>
+          <div class="category-pills" id="categoryPills">
+            <button class="pill" data-value="Food">🍜 Food</button>
+            <button class="pill" data-value="Transport">🚌 Transport</button>
+            <button class="pill" data-value="Fun">🎉 Fun</button>
+          </div>
+          <div class="custom-category-row" id="customCatRow">
+            <input type="text" id="customCategory" placeholder="New category name..." maxlength="20" />
+            <button class="btn-add-cat" id="addCatBtn">Add</button>
+          </div>
+          <button class="btn-custom-toggle" id="customToggle">＋ Add custom category</button>
+          <input type="hidden" id="selectedCategory" />
+          <span class="error-msg" id="categoryError">Please select a category.</span>
+        </div>
+        <button class="btn-primary" id="addBtn">Add Transaction</button>
+      </section>
+
+      <!-- Chart -->
+      <section class="card chart-card">
+        <h2 class="card-title">Spending by Category</h2>
+        <div class="chart-wrap">
+          <canvas id="expenseChart"></canvas>
+          <div class="chart-empty" id="chartEmpty">
+            <span>📊</span>
+            <p>Add transactions to see the chart</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Transaction List -->
+    <section class="card list-card">
+      <div class="list-header">
+        <h2 class="card-title">Transactions</h2>
+        <div class="list-controls">
+          <label for="sortSelect" class="sort-label">Sort by</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="amount-high">Amount ↓</option>
+            <option value="amount-low">Amount ↑</option>
+            <option value="category">Category</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="transaction-list" id="transactionList">
+        <div class="empty-state" id="emptyState">
+          <span class="empty-icon">🧾</span>
+          <p>No transactions yet.<br>Add one above to get started!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Spendly — Expense & Budget Visualizer</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

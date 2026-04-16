@@ -38,7 +38,7 @@ A simple and elegant expense tracking web application built with vanilla JavaScr
 
 ## Live Demo
 
-[View Live Site](https://ggwynie.github.io/spendly/)
+[View Live Site][(https://ggwynie.github.io/CodingCamp-13April2026-gwyneth/)]
 
 ## Author
 
